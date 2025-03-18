@@ -1,7 +1,6 @@
 package com.example.sakila.dto;
 
 import com.example.sakila.controllers.ActorController;
-import com.example.sakila.dto.request.ActorPatchRequest;
 import com.example.sakila.dto.request.ActorRequest;
 import com.example.sakila.dto.response.ActorResponse;
 import com.example.sakila.entities.Actor;
@@ -70,15 +69,15 @@ public class ActorControllerTest {
     @Test
     public void updateActorReturnsUpdatedActorResponseWhenActorIsUpdated() {
         final short id = 1;
-        final var actorPatchRequest = new ActorPatchRequest("Muhammad", "Abdullah", List.of());
+        final var actorRequest = new ActorRequest("Muhammad", "Abdullah", List.of());
 
         final var updatedActor = new Actor(id, "Muhammad", "Abdullah", "Muhammad Abdullah", List.of());
 
         final var expectedResponse = ActorResponse.from(updatedActor);
 
-        doReturn(expectedResponse).when(service).updateActor(id, actorPatchRequest);
+        doReturn(expectedResponse).when(service).updateActor(id, actorRequest);
 
-        final var actualResponse = controller.updateActor(id, actorPatchRequest);
+        final var actualResponse = controller.updateActor(id, actorRequest);
 
         Assertions.assertEquals(expectedResponse.getId(), actualResponse.getId());
         Assertions.assertEquals(expectedResponse.getFirstName(), actualResponse.getFirstName());

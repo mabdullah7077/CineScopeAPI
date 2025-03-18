@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/languages")  // The base URL for this controller
+@RequestMapping("/languages")
 public class LanguageController {
 
     private final LanguageService languageService;
@@ -22,30 +22,29 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-
-    @PostMapping
+    @PostMapping // Create a new language
     @ResponseStatus(HttpStatus.CREATED)
     public LanguageResponse createLanguage(@Valid @RequestBody LanguageRequest languageRequest) {
         return languageService.createLanguage(languageRequest);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // Get a language by ID
     public LanguageResponse getLanguageById(@PathVariable Short id) {
         return languageService.getLanguageById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // Update an existing language
     public LanguageResponse updateLanguage(@PathVariable Short id, @Valid @RequestBody LanguageRequest languageRequest) {
         return languageService.updateLanguage(id, languageRequest);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // Delete a language by ID
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLanguage(@PathVariable Short id) {
         languageService.deleteLanguage(id);
     }
 
-    @GetMapping
+    @GetMapping // Get all languages
     public List<LanguageResponse> getAllLanguages() {
         return languageService.getAllLanguages();
     }

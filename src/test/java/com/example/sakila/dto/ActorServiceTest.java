@@ -1,10 +1,8 @@
 package com.example.sakila.dto;
 
-import com.example.sakila.dto.request.ActorPatchRequest;
 import com.example.sakila.dto.request.ActorRequest;
 import com.example.sakila.dto.response.ActorResponse;
 import com.example.sakila.entities.Actor;
-import com.example.sakila.entities.Film;
 import com.example.sakila.repos.ActorRepo;
 import com.example.sakila.repos.FilmRepo;
 import com.example.sakila.services.ActorService;
@@ -33,7 +31,7 @@ public class ActorServiceTest {
 
         actorRepo = mock(ActorRepo.class);
         filmRepo = mock(FilmRepo.class);
-        actorService = new ActorService(actorRepo, filmRepo);
+        actorService = new ActorService(actorRepo);
     }
 
     @Test
@@ -140,13 +138,13 @@ public class ActorServiceTest {
         actor.setFirstName("John");
         actor.setLastName("Smith");
 
-        ActorPatchRequest actorPatchRequest = new ActorPatchRequest();
-        actorPatchRequest.setFirstName("Updated John");
+        ActorRequest actorRequest = new ActorRequest();
+        actorRequest.setFirstName("Updated John");
 
         when(actorRepo.findById(actorId)).thenReturn(Optional.of(actor));
         when(actorRepo.save(any(Actor.class))).thenReturn(actor);
 
-        ActorResponse actorResponse = actorService.updateActor(actorId, actorPatchRequest);
+        ActorResponse actorResponse = actorService.updateActor(actorId, actorRequest);
 
 
         assertEquals("Updated John", actorResponse.getFirstName());

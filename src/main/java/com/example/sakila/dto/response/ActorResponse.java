@@ -16,8 +16,9 @@ public class ActorResponse {
     private final Short id;
     private final String firstName;
     private final String lastName;
-    private final List<PartialFilmResponse> films;
+    private final List<PartialFilmResponse> films; // List of films the actor has participated in
 
+    // Converts an Actor entity to an ActorResponse DTO
     public static ActorResponse from(Actor actor) {
         return new ActorResponse(
                 actor.getId(),
@@ -25,13 +26,13 @@ public class ActorResponse {
                 actor.getLastName(),
                 actor.getFilms()
                         .stream()
-                        .map(PartialFilmResponse::from)
+                        .map(PartialFilmResponse::from) // Convert films to PartialFilmResponse
                         .toList()
         );
     }
 
+    // Returns the full name of the actor
     public String getFullName(){
         return firstName + " " + lastName;
     }
-
 }

@@ -24,37 +24,36 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-    @GetMapping("/films")
+    @GetMapping("/films") // Get all films with optional filters
     public List<FilmResponse> listFilms(
             @RequestParam(required = false) String categoryName,
             @RequestParam(required = false) Integer releaseYear,
             @RequestParam(required = false) String rating,
             @RequestParam(required = false) String title) {
-
         return filmService.listFilms(categoryName, releaseYear, rating, title);
     }
 
-    @GetMapping("/films/{id}")
+    @GetMapping("/films/{id}") // Get a film by ID
     public FilmResponse getFilmById(@PathVariable Short id) {
         return filmService.getFilmById(id);
     }
 
-    @GetMapping("/films/language")
+    @GetMapping("/films/language") // Get films by language
     public List<FilmResponse> listFilmsByLanguage(@RequestParam String language) {
         return filmService.listFilmsByLanguage(language);
     }
 
-    @PostMapping("/films")
-    public FilmResponse createFilm(@RequestBody FilmRequest data) {
+    @PostMapping("/films") // Create a new film
+    public FilmResponse createFilm(@Valid @RequestBody FilmRequest data) {
         return filmService.createFilm(data);
     }
 
-    @PatchMapping("/films/{id}")
+    @PatchMapping("/films/{id}") // Update a film partially
     public FilmResponse patchFilm(@PathVariable Short id, @Valid @RequestBody FilmPatchRequest data) {
         return filmService.patchFilm(id, data);
     }
 
-    @DeleteMapping("/films/{id}")
+    @DeleteMapping("/films/{id}") // Delete a film by ID
     public void deleteFilm(@PathVariable Short id) {
         filmService.deleteFilm(id);
     }

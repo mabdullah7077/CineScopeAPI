@@ -37,7 +37,7 @@ public class FilmService {
         this.categoryRepo = categoryRepo;
     }
 
-
+    // List films based on optional filters: category, release year, rating, and title
     public List<FilmResponse> listFilms(String categoryName, Integer releaseYear, String rating, String title) {
         List<Film> films = filmRepo.findAll();
 
@@ -66,13 +66,14 @@ public class FilmService {
                 .collect(Collectors.toList());
     }
 
-
+    // Get a film by its ID
     public FilmResponse getFilmById(Short id) {
         return filmRepo.findById(id)
                 .map(FilmResponse::from)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    // List films by language
     public List<FilmResponse> listFilmsByLanguage(String language) {
         return filmRepo.findByLanguageNameIgnoreCase(language)
                 .stream()
@@ -80,16 +81,17 @@ public class FilmService {
                 .collect(Collectors.toList());
     }
 
-
+    // Create a new film
     public FilmResponse createFilm(FilmRequest data) {
-        Language language = languageRepo.findById(data.getLanguageId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        // Validate language
+        Language language = languageRepo.findByNameIgnoreCase(data.getLanguageName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language not found"));
 
+        // Fetch actors and categories by IDs
         List<Actor> actors = actorRepo.findAllById(data.getActorIds());
-
         List<Category> categories = categoryRepo.findAllById(data.getCategoryIds());
 
-
+        // Create and save the film
         Film film = new Film();
         film.setTitle(data.getTitle());
         film.setDescription(data.getDescription());
@@ -104,27 +106,17 @@ public class FilmService {
         return FilmResponse.from(savedFilm);
     }
 
-
+    // Update an existing film with patch request
     public FilmResponse patchFilm(Short id, FilmPatchRequest data) {
         Film film = filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-
-        if (data.getTitle() != null) {
-            film.setTitle(data.getTitle());
-        }
-
-        if (data.getDescription() != null) {
-            film.setDescription(data.getDescription());
-        }
-
-        if (data.getReleaseYear() != null) {
-            film.setReleaseYear(data.getReleaseYear());
-        }
-
-        if (data.getLength() != null) {
-            film.setLength(data.getLength());
-        }
+        // Apply updates from the patch request
+        if (data.getTitle() != null) film.setTitle(data.getTitle());
+        if (data.getDescription() != null) film.setDescription(data.getDescription());
+        if (data.getReleaseYear() != null) film.setReleaseYear(data.getReleaseYear());
+        if (data.getLength() != null) film.setLength(data.getLength());
+        if (data.getRating() != null) film.setRating(data.getRating());
 
         if (data.getActorIds() != null) {
             List<Actor> actors = actorRepo.findAllById(data.getActorIds());
@@ -137,10 +129,6 @@ public class FilmService {
             film.setLanguage(language);
         }
 
-        if (data.getRating() != null) {
-            film.setRating(data.getRating());
-        }
-
         if (data.getCategoryIds() != null) {
             List<Category> categories = categoryRepo.findAllById(data.getCategoryIds());
             film.setCategories(categories);
@@ -150,6 +138,7 @@ public class FilmService {
         return FilmResponse.from(updatedFilm);
     }
 
+    // Delete a film by ID
     public void deleteFilm(Short id) {
         Film film = filmRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

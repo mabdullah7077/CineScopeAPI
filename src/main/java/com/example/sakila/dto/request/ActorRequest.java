@@ -1,6 +1,5 @@
 package com.example.sakila.dto.request;
 
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,14 +15,13 @@ import java.util.List;
 @Setter
 public class ActorRequest {
 
-    @NotNull
-    @Size(min = 1, max = 45)
+    @NotNull // Ensures firstName is not null
+    @Size(min = 1, max = 45) // Limits the size of firstName
     private String firstName;
 
-    @NotNull
-    @Size(min = 1, max = 45)
+    @NotNull // Ensures lastName is not null
+    @Size(min = 1, max = 45) // Limits the size of lastName
     private String lastName;
 
-
-    private List<Short> filmIds;
+    private List<Short> filmIds; // List of associated film IDs
 }

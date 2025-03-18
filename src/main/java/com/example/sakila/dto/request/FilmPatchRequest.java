@@ -14,23 +14,23 @@ import java.util.List;
 @AllArgsConstructor
 public class FilmPatchRequest {
 
-    @Size(max = 128)
+    @Size(max = 128) // Limits the size of title
     private String title;
 
-    @Size(max = 500)
+    @Size(max = 500) // Limits the size of description
     private String description;
 
-    private Year releaseYear;
+    private Year releaseYear; // Release year of the film
 
-    @Min(value = 1)
+    @Min(value = 1) // Ensures length is at least 1
     private Short length;
 
-    private List<Short> actorIds;
+    private List<Short> actorIds; // List of associated actor IDs
 
-    private Short languageId;
+    private Short languageId; // Associated language id
 
-    @Size(max = 5)
+    @Size(max = 5) // Limits the size of rating
     private String rating;
 
-    private List<Short> categoryIds;
+    private List<Short> categoryIds; // List of associated category IDs
 }

@@ -70,7 +70,7 @@ public class FilmControllerTest {
     public void createFilmReturnsFilmResponseWhenFilmIsCreated() {
         final var releaseYear = Year.of(2022);
         final var language = new Language((short) 1, "English");
-        final var filmRequest = new FilmRequest("New Film", "Description", releaseYear, (short) 110, "PG", language.getId(), List.of(), List.of());
+        final var filmRequest = new FilmRequest("New Film", "Description", releaseYear, (short) 110, "PG", language.getName(), List.of(), List.of());
         final var createdFilm = new Film((short) 1, "New Film", "Description", releaseYear, (short) 110, "PG", language, List.of(), List.of());
         final var expectedResponse = FilmResponse.from(createdFilm);
 

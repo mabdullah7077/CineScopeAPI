@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "film")
+@Table(name = "film") // Table name
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,23 +35,23 @@ public class Film {
     @Column(name = "rating")
     private String rating;
 
-    @ManyToOne
-    @JoinColumn(name = "language_id")
-    private Language language;
+    @ManyToOne // Many-to-one relationship with Language
+    @JoinColumn(name = "language_id") // Foreign key for language
+    private Language language; // Language of the film
 
-    @ManyToMany
+    @ManyToMany // Many-to-many relationship with Actor
     @JoinTable(
             name = "film_actor",
-            joinColumns = {@JoinColumn(name = "film_id")},
-            inverseJoinColumns = {@JoinColumn(name = "actor_id")}
+            joinColumns = {@JoinColumn(name = "film_id")}, // Film FK
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")} // Actor FK
     )
     private List<Actor> actors;
 
-    @ManyToMany
+    @ManyToMany // Many-to-many relationship with Category
     @JoinTable(
             name = "film_category",
-            joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+            joinColumns = @JoinColumn(name = "film_id"), // Film FK
+            inverseJoinColumns = @JoinColumn(name = "category_id") // Category FK
     )
     private List<Category> categories;
 

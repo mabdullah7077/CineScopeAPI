@@ -27,6 +27,7 @@ public class FilmResponse {
     private final List<CategoryResponse> categories;
 
 
+    // Method to convert Film entity to FilmResponse DTO
     public static com.example.sakila.dto.response.FilmResponse from(Film film) {
         return new com.example.sakila.dto.response.FilmResponse(
                 film.getId(),
@@ -37,14 +38,13 @@ public class FilmResponse {
                 film.getRating(),
                 film.getActors()
                         .stream()
-                        .map(PartialActorResponse::from)
-                        .toList(),
-                LanguageResponse.from(film.getLanguage()),
+                        .map(PartialActorResponse::from) // Convert each actor to PartialActorResponse
+                        .toList(), // Collect the actors into a list
+                LanguageResponse.from(film.getLanguage()), // Convert language to LanguageResponse DTO
                 film.getCategories()
                         .stream()
-                        .map(CategoryResponse::from)
-                        .collect(Collectors.toList())
-
+                        .map(CategoryResponse::from) // Convert each category to CategoryResponse
+                        .collect(Collectors.toList()) // Collect categories into a list
         );
     }
 

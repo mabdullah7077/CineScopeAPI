@@ -32,6 +32,7 @@ public class FilmServiceTest {
     private CategoryRepo categoryRepo;
     private FilmService filmService;
 
+    // Setup method to initialize mocks and the FilmService instance before each test
     @BeforeEach
     void setUp() {
 
@@ -40,10 +41,11 @@ public class FilmServiceTest {
         languageRepo = mock(LanguageRepo.class);
         categoryRepo = mock(CategoryRepo.class);
 
-
+        // Creating FilmService with mocked repositories
         filmService = new FilmService(filmRepo, actorRepo, languageRepo, categoryRepo);
     }
 
+    // Test to check if the listFilms method returns all films when no filters are provided
     @Test
     public void testListFilmsReturnsFilmsWhenNoFilter() {
 
@@ -64,13 +66,15 @@ public class FilmServiceTest {
         film2.setLanguage(new Language());
 
         List<Film> films = List.of(film1, film2);
-        when(filmRepo.findAll()).thenReturn(films);
 
+        // Mocking the repository to return a list of films
+        when(filmRepo.findAll()).thenReturn(films);
 
         List<FilmResponse> filmResponses = filmService.listFilms(null, null, null, null);
 
-
         assertEquals(2, filmResponses.size());
+
+        // Verifying that the repository's findAll method was called once
         verify(filmRepo, times(1)).findAll();
     }
 
@@ -99,14 +103,12 @@ public class FilmServiceTest {
 
         assertEquals(1, filmResponses.size());
         assertEquals("Film 1", filmResponses.get(0).getTitle());
+
         verify(filmRepo, times(1)).findByTitleContainingIgnoreCase("Film 1");
     }
 
-
-
     @Test
     public void testGetFilmByIdReturnsFilmResponseWhenFilmExists() {
-
 
         Short filmId = 1;
         Film film = new Film();
@@ -122,6 +124,7 @@ public class FilmServiceTest {
 
         assertNotNull(filmResponse);
         assertEquals("Film 1", filmResponse.getTitle());
+
         verify(filmRepo, times(1)).findById(filmId);
     }
 
@@ -130,6 +133,7 @@ public class FilmServiceTest {
     public void testGetFilmByIdThrowsExceptionWhenFilmNotFound() {
 
         Short filmId = 1;
+
         when(filmRepo.findById(filmId)).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> filmService.getFilmById(filmId));
@@ -144,7 +148,7 @@ public class FilmServiceTest {
         Year releaseYear = Year.of(2025);
         Short length = 120;
         String rating = "PG";
-        Short languageId = 1;
+        String languageName = "English";
         Short actorId = 1;
         Short categoryId = 1;
 
@@ -154,13 +158,12 @@ public class FilmServiceTest {
                 releaseYear,
                 length,
                 rating,
-                languageId,
+                languageName,
                 List.of(actorId),
                 List.of(categoryId)
         );
 
         Language language = new Language();
-        language.setId(languageId);
         language.setName("English");
 
         Actor actor = new Actor();
@@ -185,7 +188,7 @@ public class FilmServiceTest {
         savedFilm.setActors(List.of(actor));
         savedFilm.setCategories(List.of(category));
 
-        when(languageRepo.findById(languageId)).thenReturn(Optional.of(language));
+        when(languageRepo.findByNameIgnoreCase(languageName)).thenReturn(Optional.of(language));
         when(actorRepo.findAllById(List.of(actorId))).thenReturn(List.of(actor));
         when(categoryRepo.findAllById(List.of(categoryId))).thenReturn(List.of(category));
         when(filmRepo.save(any(Film.class))).thenReturn(savedFilm);
@@ -194,16 +197,15 @@ public class FilmServiceTest {
 
         assertNotNull(filmResponse);
         assertEquals("Film 1", filmResponse.getTitle());
-        verify(filmRepo, times(1)).save(any(Film.class));
-        verify(languageRepo, times(1)).findById(languageId);
-    }
 
+        verify(filmRepo, times(1)).save(any(Film.class));
+        verify(languageRepo, times(1)).findByNameIgnoreCase(languageName);
+    }
 
     @Test
     public void testPatchFilmReturnsUpdatedFilmResponse() {
 
         Short filmId = 1;
-
         Film film = new Film();
         film.setId(filmId);
         film.setTitle("Film 1");
@@ -231,7 +233,6 @@ public class FilmServiceTest {
                 null
         );
 
-
         when(filmRepo.findById(filmId)).thenReturn(Optional.of(film));
         when(filmRepo.save(any(Film.class))).thenReturn(film);
 
@@ -243,10 +244,9 @@ public class FilmServiceTest {
         assertEquals(updatedYear, filmResponse.getReleaseYear());
         assertEquals(updatedLength, filmResponse.getLength());
         assertEquals(updatedRating, filmResponse.getRating());
+
         verify(filmRepo, times(1)).save(any(Film.class));
     }
-
-
 
     @Test
     public void testDeleteFilmDeletesFilmWhenFilmExists() {
@@ -263,7 +263,6 @@ public class FilmServiceTest {
         verify(filmRepo, times(1)).delete(film);
     }
 
-
     @Test
     public void testListFilmsByLanguageReturnsCorrectFilms() {
 
@@ -277,7 +276,6 @@ public class FilmServiceTest {
         film1.setLanguage(language);
         film1.setActors(List.of());
         film1.setCategories(List.of());
-
 
         Film film2 = new Film();
         film2.setTitle("Film 2");
@@ -298,11 +296,11 @@ public class FilmServiceTest {
         verify(filmRepo, times(1)).findByLanguageNameIgnoreCase(languageName);
     }
 
-
     @Test
     public void testDeleteFilmThrowsExceptionWhenFilmNotFound() {
 
         Short filmId = 1;
+
         when(filmRepo.findById(filmId)).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> filmService.deleteFilm(filmId));
