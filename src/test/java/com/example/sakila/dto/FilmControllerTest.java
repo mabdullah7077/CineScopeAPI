@@ -21,7 +21,7 @@ public class FilmControllerTest {
     FilmController controller = new FilmController(service);
 
     @Test
-    public void getFilmByIdReturnsFilmResponseForAValidFilmId() {
+    public void getFilmByIdReturnsFilmResponse() {
         final short id = 1;
 
         final var releaseYear = Year.of(2001);

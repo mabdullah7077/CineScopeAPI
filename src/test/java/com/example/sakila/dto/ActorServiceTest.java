@@ -4,7 +4,6 @@ import com.example.sakila.dto.request.ActorRequest;
 import com.example.sakila.dto.response.ActorResponse;
 import com.example.sakila.entities.Actor;
 import com.example.sakila.repos.ActorRepo;
-import com.example.sakila.repos.FilmRepo;
 import com.example.sakila.services.ActorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,14 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ActorServiceTest {
 
     private ActorRepo actorRepo;
-    private FilmRepo filmRepo;
     private ActorService actorService;
 
     @BeforeEach
     void setUp() {
 
         actorRepo = mock(ActorRepo.class);
-        filmRepo = mock(FilmRepo.class);
         actorService = new ActorService(actorRepo);
     }
 
@@ -48,9 +45,7 @@ public class ActorServiceTest {
         List<Actor> actors = List.of(actor1, actor2);
         when(actorRepo.findAll()).thenReturn(actors);
 
-
         List<ActorResponse> actorResponses = actorService.listActors(null);
-
 
         assertEquals(2, actorResponses.size());
         verify(actorRepo, times(1)).findAll();

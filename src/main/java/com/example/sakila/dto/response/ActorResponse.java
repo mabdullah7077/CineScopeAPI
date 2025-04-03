@@ -16,7 +16,7 @@ public class ActorResponse {
     private final Short id;
     private final String firstName;
     private final String lastName;
-    private final List<PartialFilmResponse> films; // List of films the actor has participated in
+    private final List<PartialFilmResponse> films;
 
     // Converts an Actor entity to an ActorResponse DTO
     public static ActorResponse from(Actor actor) {

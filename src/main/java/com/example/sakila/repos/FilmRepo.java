@@ -9,19 +9,15 @@ import java.util.List;
 
 public interface FilmRepo extends JpaRepository<Film, Short> {
 
-    // Find films by title
+
     List<Film> findByTitleContainingIgnoreCase(String title);
 
-    // Find films by language name
     List<Film> findByLanguageNameIgnoreCase(String name);
 
-    // Find films by category name
     List<Film> findByCategoriesNameIgnoreCase(String categoryName);
 
-    // Find films by release year
     List<Film> findByReleaseYear(Year releaseYear);
 
-    // Find films by rating
     List<Film> findByRating(String rating);
 
 }

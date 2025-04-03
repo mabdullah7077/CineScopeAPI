@@ -19,18 +19,25 @@ public class ActorControllerTest {
 
 
     @Test
-    public void getActorByIdReturnsActorResponseForAValidActorId(){
+    public void getActorByIdReturnsActorResponse() {
+        // Set up test data
         final short id = 1;
         final var actor = new Actor(id, "Muhammad", "Abdullah", "Muhammad Abdullah", List.of());
 
+        // Set the expected response from the service layer
         final var expectedResponse = ActorResponse.from(actor);
+
+        // Mock the service method to return the expected response when called with the specific ID
         doReturn(expectedResponse).when(service).getActorById(id);
+
+        // Call the controller method that is being tested
         final var actualResponse = controller.getActorById(id);
 
         Assertions.assertEquals(expectedResponse.getId(), actualResponse.getId());
         Assertions.assertEquals(expectedResponse.getFirstName(), actualResponse.getFirstName());
         Assertions.assertEquals(expectedResponse.getLastName(), actualResponse.getLastName());
     }
+
 
     @Test
     public void listActorsReturnsListOfActorResponses() {

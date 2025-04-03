@@ -15,13 +15,13 @@ import java.util.List;
 @Setter
 public class ActorRequest {
 
-    @NotNull // Ensures firstName is not null
-    @Size(min = 1, max = 45) // Limits the size of firstName
+    @NotNull
+    @Size(min = 1, max = 45)
     private String firstName;
 
-    @NotNull // Ensures lastName is not null
-    @Size(min = 1, max = 45) // Limits the size of lastName
+    @NotNull
+    @Size(min = 1, max = 45)
     private String lastName;
 
-    private List<Short> filmIds; // List of associated film IDs
+    private List<Short> filmIds;
 }

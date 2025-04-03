@@ -7,36 +7,36 @@ import lombok.Getter;
 import java.time.Year;
 import java.util.List;
 
-@AllArgsConstructor // Generates a constructor with all fields
-@Getter // Generates getters for all fields
+@AllArgsConstructor
+@Getter
 public class FilmRequest {
 
     @NotNull // Ensures title is not null
     @Size(max = 128) // Limits the size of title
     private final String title;
 
-    @NotNull // Ensures description is not null
-    @Size(max = 500) // Limits the size of description
+    @NotNull
+    @Size(max = 500)
     private final String description;
 
-    @NotNull // Ensures releaseYear is not null
+    @NotNull
     private final Year releaseYear;
 
-    @NotNull // Ensures length is not null
+    @NotNull
     @Min(value = 1)
     @Max(value = 240)
     private final Short length;
 
-    @NotNull // Ensures rating is not null
-    @Size(max = 5) // Limits the size of rating
+    @NotNull
+    @Size(max = 5)
     private final String rating;
 
-    @NotNull // Ensures languageName is not null
+    @NotNull
     private final String languageName;
 
-    @NotEmpty // Ensures actorIds list is not empty
+    @NotEmpty
     private final List<Short> actorIds;
 
-    @NotEmpty // Ensures categoryIds list is not empty
+    @NotEmpty
     private final List<Short> categoryIds;
 }

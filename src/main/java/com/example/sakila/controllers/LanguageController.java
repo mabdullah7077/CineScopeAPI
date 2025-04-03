@@ -22,29 +22,29 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-    @PostMapping // Create a new language
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public LanguageResponse createLanguage(@Valid @RequestBody LanguageRequest languageRequest) {
         return languageService.createLanguage(languageRequest);
     }
 
-    @GetMapping("/{id}") // Get a language by ID
+    @GetMapping("/{id}")
     public LanguageResponse getLanguageById(@PathVariable Short id) {
         return languageService.getLanguageById(id);
     }
 
-    @PutMapping("/{id}") // Update an existing language
+    @PutMapping("/{id}")
     public LanguageResponse updateLanguage(@PathVariable Short id, @Valid @RequestBody LanguageRequest languageRequest) {
         return languageService.updateLanguage(id, languageRequest);
     }
 
-    @DeleteMapping("/{id}") // Delete a language by ID
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLanguage(@PathVariable Short id) {
         languageService.deleteLanguage(id);
     }
 
-    @GetMapping // Get all languages
+    @GetMapping
     public List<LanguageResponse> getAllLanguages() {
         return languageService.getAllLanguages();
     }

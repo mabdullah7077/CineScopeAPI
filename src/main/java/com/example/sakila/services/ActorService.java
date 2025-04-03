@@ -3,9 +3,7 @@ package com.example.sakila.services;
 import com.example.sakila.dto.request.ActorRequest;
 import com.example.sakila.dto.response.ActorResponse;
 import com.example.sakila.entities.Actor;
-import com.example.sakila.entities.Film;
 import com.example.sakila.repos.ActorRepo;
-import com.example.sakila.repos.FilmRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,11 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@Service // Marks the class as a Spring service
+@Service
 public class ActorService {
 
-    private final ActorRepo actorRepo; // Actor repository
-
+    private final ActorRepo actorRepo; 
 
     @Autowired
     public ActorService(ActorRepo actorRepo) {

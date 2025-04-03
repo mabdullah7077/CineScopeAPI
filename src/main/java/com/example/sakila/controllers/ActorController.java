@@ -31,7 +31,7 @@ public class ActorController {
     }
 
     @PostMapping("/actors") // Create a new actor
-    public ActorResponse createActor(@Valid @RequestBody ActorRequest actorRequest) {
+    public ActorResponse createActor(@Valid @RequestBody ActorRequest actorRequest) { // Validate actor details
         return actorService.createActor(actorRequest);
     }
 

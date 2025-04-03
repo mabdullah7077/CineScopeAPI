@@ -2,14 +2,11 @@ package com.example.sakila.controllers;
 
 import com.example.sakila.dto.request.FilmPatchRequest;
 import com.example.sakila.dto.request.FilmRequest;
-import com.example.sakila.dto.request.LanguageRequest;
 import com.example.sakila.dto.response.FilmResponse;
 import com.example.sakila.services.FilmService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -44,11 +41,11 @@ public class FilmController {
     }
 
     @PostMapping("/films") // Create a new film
-    public FilmResponse createFilm(@Valid @RequestBody FilmRequest data) {
+    public FilmResponse createFilm(@Valid @RequestBody FilmRequest data) { // validate film details
         return filmService.createFilm(data);
     }
 
-    @PatchMapping("/films/{id}") // Update a film partially
+    @PatchMapping("/films/{id}") // Update a film
     public FilmResponse patchFilm(@PathVariable Short id, @Valid @RequestBody FilmPatchRequest data) {
         return filmService.patchFilm(id, data);
     }

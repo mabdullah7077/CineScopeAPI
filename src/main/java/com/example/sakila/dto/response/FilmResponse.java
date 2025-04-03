@@ -1,10 +1,6 @@
 package com.example.sakila.dto.response;
 
-import com.example.sakila.dto.response.PartialFilmResponse;
-import com.example.sakila.entities.Actor;
 import com.example.sakila.entities.Film;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -28,8 +24,8 @@ public class FilmResponse {
 
 
     // Method to convert Film entity to FilmResponse DTO
-    public static com.example.sakila.dto.response.FilmResponse from(Film film) {
-        return new com.example.sakila.dto.response.FilmResponse(
+    public static FilmResponse from(Film film) {
+        return new FilmResponse(
                 film.getId(),
                 film.getTitle(),
                 film.getDescription(),

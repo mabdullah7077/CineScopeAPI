@@ -37,7 +37,7 @@ public class Film {
 
     @ManyToOne // Many-to-one relationship with Language
     @JoinColumn(name = "language_id") // Foreign key for language
-    private Language language; // Language of the film
+    private Language language;
 
     @ManyToMany // Many-to-many relationship with Actor
     @JoinTable(
